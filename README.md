@@ -2,7 +2,7 @@
 
 [点击查看视频](http://www.17sysj.com/video/lpds_11b08aa57785a)<br/> 
 ###使用
-
+[使用](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/app/src/main/java/com/hbm/hbm/MainActivity.java)
  //一个页面如果有多次选取图片 功能 需要先清除之前一次选中状态  SelectImgActivity.destroy(false);<br/> 
 
     public void onClick(View view) {
@@ -32,8 +32,6 @@
         //销毁时需要调用销毁
         SelectImgActivity.destroy(false);
     }
-
-[使用](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/app/src/main/java/com/hbm/hbm/MainActivity.java)
 
 <br/> 
     ###包结构介绍.<br/>
