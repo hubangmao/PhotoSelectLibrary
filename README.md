@@ -34,6 +34,13 @@
         SelectImgActivity.destroy(false);
     }
 
+
+
+
+
+
+
+<br/> 
 <br/> 
     ###包结构介绍.<br/>
     1.<br/>
@@ -48,6 +55,9 @@
 
   导入可能会遇到的异常<br/>
     该库的Theme如下 与使用者库不一需要调节两边为统一的主题哦<br/>
+
+
+
 
      <style name="AppTheme.NoActionBar">
             <item name="windowActionBar">false</item>
