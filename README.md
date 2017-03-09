@@ -1,12 +1,6 @@
 ### 安卓图库选择
 
 [点击查看视频](http://www.17sysj.com/video/lpds_11b08aa57785a)<br/> 
-[使用](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/app/src/main/java/com/hbm/hbm/MainActivity.java)
-### 页面查看
- ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img1.png)
- ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img2.png)
- ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img3.png)
-
 ###使用
 
  //一个页面如果有多次选取图片 功能 需要先清除之前一次选中状态  SelectImgActivity.destroy(false);<br/> 
@@ -38,6 +32,8 @@
         //销毁时需要调用销毁
         SelectImgActivity.destroy(false);
     }
+
+[使用](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/app/src/main/java/com/hbm/hbm/MainActivity.java)
 
 <br/> 
     ###包结构介绍.<br/>
