@@ -5,7 +5,7 @@
 [使用](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/app/src/main/java/com/hbm/hbm/MainActivity.java)<br/><br/> 
 
  //一个页面如果有多次选取图片 功能 需要先清除之前一次选中状态  SelectImgActivity.destroy(false);<br/> 
-
+     ```java
     public void onClick(View view) {
         //第一步 图片选择成功回调
         SelectImgActivity.setOnImgSelectOkListener(new PhotoListener.OnImgSelectOkListener() {
@@ -33,32 +33,23 @@
         //销毁时需要调用销毁
         SelectImgActivity.destroy(false);
     }
-
-
-
-
-
-
-
 <br/> 
 <br/> 
-    ###包结构介绍.<br/>
-    1.<br/>
+    ### 包结构介绍.<br/>
+   #  1.<br/>
     activity包  =图片选择Activity+大图查看Activity<br/>
-    2.<br/>
+   #  2.<br/>
     adapter包   =图片选择适配器+相册分类适配器<br/>
-    3.<br/>
+   #  3.<br/>
     utils包     =图片缓存+拿到图片分类路径<br/>
-    4.<br/>
+   #  4.<br/>
     zoom包      =图片手势操作<br/>
 
 
   导入可能会遇到的异常<br/>
     该库的Theme如下 与使用者库不一需要调节两边为统一的主题哦<br/>
 
-
-
-
+ ```xml
      <style name="AppTheme.NoActionBar">
             <item name="windowActionBar">false</item>
             <item name="windowNoTitle">true</item>
