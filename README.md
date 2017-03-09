@@ -4,8 +4,8 @@
 [使用](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/app/src/main/java/com/hbm/hbm/MainActivity.java)<br/><br/> 
 ###使用
  //一个页面如果有多次选取图片 功能 需要先清除之前一次选中状态  SelectImgActivity.destroy(false);<br/> 
-     ```java
-    public void onClick(View view) {
+     ```
+     public void onClick(View view) {
         //第一步 图片选择成功回调
         SelectImgActivity.setOnImgSelectOkListener(new PhotoListener.OnImgSelectOkListener() {
             @Override
@@ -32,7 +32,7 @@
         //销毁时需要调用销毁
         SelectImgActivity.destroy(false);
     }
-
+ ```
 <br/> 
     ### 包结构介绍.<br/>
    #  1.<br/>
