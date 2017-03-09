@@ -2,9 +2,9 @@
 
 [点击查看视频](http://www.17sysj.com/video/lpds_11b08aa57785a)<br/> 
 ### 页面查看
- ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img1.jpg)
- ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img2.jpg)
- ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img3.jpg)
+ ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img1.png)
+ ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img2.png)
+ ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img3.png)
 
 ###使用
 [使用](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/app/src/main/java/com/hbm/hbm/MainActivity.java)
