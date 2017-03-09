@@ -40,13 +40,13 @@
     }
 
 <br/> 
-    ###包结构介绍
-    ##1.<br/>
-    activity包  =图片选择Activity+大图查看Activity
+    ###包结构介绍.<br/>
+    ##1<br/>
+    activity包  =图片选择Activity+大图查看Activity<br/>
     ##2.<br/>
-    adapter包   =图片选择适配器+相册分类适配器
+    adapter包   =图片选择适配器+相册分类适配器<br/>
     ##3.<br/>
-    utils包     =图片缓存+拿到图片分类路径
+    utils包     =图片缓存+拿到图片分类路径<br/>
     ##4.<br/>
     zoom包      =图片手势操作
 
