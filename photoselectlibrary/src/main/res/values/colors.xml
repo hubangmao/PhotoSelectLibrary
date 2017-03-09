@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="action_bar_bg_color">#18a0d0</color>
+    <color name="action_bar_dow_bg_color">#198db5</color>
+    <color name="look_img_bg_color">#232424</color>
+    <!--状态栏字体颜色-->
+    <color name="action_bar_text_color">#f8f8f8</color>
+    <color name="action_bar_text_color_dow">#ffffff</color>
+
+    <!--对话框背景-->
+    <color name="hint_dialog_bg">#f4f2f2</color>
+    <!--所有对话框内容字体颜色-->
+    <color name="dialog_content_text_color">#3a3a3a</color>
+    <!--所有对话框按钮字体颜色-->
+    <color name="dialog_btn_text_color">#3a3a3a</color>
+    <!--所有对话框按钮隔栏颜色-->
+    <color name="dialog_btn_every_bar_color">#d1d0d0</color>
+    <!--页面背景-->
+    <color name="page_bg">#fafafa</color>
+    <!--页面隔栏背景-->
+    <color name="page_every_bar_bg">#f0f0f0</color>
+    <!--所有提示类型 对话框Button selector颜色-->
+    <color name="hint_dialog_btn_item_up">#f4f2f2</color>
+    <color name="hint_dialog_btn_item_dow">#fff</color>
+    <color name="text_color">#474747</color>
+    <color name="img_list_def_bg_color">#ffffff</color>
+    <!--选择图片时背景调节黑一点-->
+    <color name="img_list_dow_bg_color">#aeaeae</color>
+
+    <color name="max_img_back_dow">#292929</color>
+    <color name="max_img_back_up">#00000000</color>
+    <!--相册 selector-->
+    <color name="photo_bg_dow">#dedede</color>
+    <color name="photo_bg_up">#ffffff</color>
+</resources>

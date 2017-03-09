@@ -1,0 +1,28 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/action_bar_bg_color</item>
+        <item name="colorPrimaryDark">@color/action_bar_bg_color</item>
+        <item name="colorAccent">@color/action_bar_bg_color</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <!--图片 CheckBox-->
+    <style name="checkbox_theme">
+        <item name="android:button">@drawable/checkbox_style</item>
+    </style>
+
+    <!--对话框主题-->
+    <style name="dialog_theme" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowActionBar">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+</resources>

@@ -1,0 +1,18 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="action_bar_text_size">16dp</dimen>
+
+    <!--所以提示对话框大小-->
+    <dimen name="dialog_width">250dp</dimen>
+    <dimen name="dialog_height">130dp</dimen>
+    <!--对话框按钮高度-->
+    <dimen name="dialog_btn_height">32dp</dimen>
+    <!--对话框内容字体大小-->
+    <dimen name="dialog_content_text_size">14dp</dimen>
+    <!--对话框内容字体大小-->
+    <dimen name="dialog_btn_text_size">14dp</dimen>
+    <!--按钮隔栏大小-->
+    <dimen name="dialog_btn_every_bar_size">0.8dp</dimen>
+</resources>

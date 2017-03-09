@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/look_img_bg_color">
+
+    <com.hubangmao.photoselectlibrary.zoom.ViewPagerFixed
+        android:id="@+id/view_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"/>
+
+    <RelativeLayout
+        android:id="@+id/action_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/look_img_bg_color">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/show_max_back_selector"
+            android:drawableLeft="@mipmap/come_back"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:scaleType="centerInside"
+            android:text="相册"
+            android:textColor="@color/action_bar_text_color"/>
+
+
+        <TextView
+            android:id="@+id/tv_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="20dp"
+            android:text="数量显示"
+            android:textColor="@color/action_bar_text_color"/>
+
+        <ProgressBar
+            android:id="@+id/pb_hint"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_toLeftOf="@id/tv_hint"/>
+
+        <CheckBox
+            android:id="@+id/cb_select_img"
+            style="@style/checkbox_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom_tool_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/look_img_bg_color">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="图片名称"
+            android:textColor="@color/action_bar_text_color"/>
+
+        <!--完成图片选择-->
+        <Button
+            android:id="@+id/btn_complete_img_sel"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_selector"
+            android:text="完成"
+            android:textColor="@color/action_bar_text_color"
+            android:textSize="@dimen/action_bar_text_size"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>
