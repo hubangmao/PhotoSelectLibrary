@@ -7,8 +7,7 @@
  ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img3.jpg)
 
 ###使用
-
-
+[使用](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/app/src/main/java/com/hbm/hbm/MainActivity.java)
 
  //一个页面如果有多次选取图片 功能 需要先清除之前一次选中状态  SelectImgActivity.destroy(false);<br/> 
 
@@ -40,9 +39,10 @@
         SelectImgActivity.destroy(false);
     }
 
+<br/> 
     ###包结构介绍
     ##1.<br/>
-     activity包 =图片选择Activity+大图查看Activity
+    activity包  =图片选择Activity+大图查看Activity
     ##2.<br/>
     adapter包   =图片选择适配器+相册分类适配器
     ##3.<br/>
