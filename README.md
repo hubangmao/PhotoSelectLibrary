@@ -2,11 +2,13 @@
 
 [点击查看视频](http://www.17sysj.com/video/lpds_11b08aa57785a)<br/> 
 ### 三个页面如下
- ![image](https://github.com/hubangmao/PhotoSelectLibrary/img1.jpg)
- ![image](https://github.com/hubangmao/PhotoSelectLibrary/img2.jpg)
- ![image](https://github.com/hubangmao/PhotoSelectLibrary/img3.jpg)
+ ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img1.jpg)
+ ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img2.jpg)
+ ![image](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/img3.jpg)
 
- ###使用
+###使用
+
+
  //一个页面如果有多次选取图片 功能 需要先清除之前一次选中状态  SelectImgActivity.destroy(false);
     public void onClick(View view) {
         //第一步 图片选择成功回调
