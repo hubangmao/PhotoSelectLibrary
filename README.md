@@ -46,6 +46,7 @@
     4.<br/>
     zoom包      =图片手势操作<br/>
 
+
   导入可能会遇到的异常<br/>
     该库的Theme如下 与使用者库不一需要调节两边为统一的主题哦
      <style name="AppTheme.NoActionBar">
