@@ -2,6 +2,8 @@
 
 [点击查看视频](http://www.17sysj.com/video/lpds_11b08aa57785a)<br/> 
 [使用](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/app/src/main/java/com/hbm/hbm/MainActivity.java)<br/><br/> 
+[Apk下载](http://download.csdn.net/download/guzuoi/9775531)<br/><br/> 
+
 ###使用
 
  //一个页面如果有多次选取图片 功能 需要先清除之前一次选中状态  SelectImgActivity.destroy(false);<br/> 

@@ -3,10 +3,10 @@ package com.hubangmao.photoselectlibrary.activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
@@ -36,7 +36,7 @@ import java.util.Set;
  * 功能说明:查看大图,传入string类型的ArrayList,文件路径
  */
 public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
-    private  final String TAG ="PhotoShowMaxImgActivity";
+    private final String TAG = "PhotoShowMaxImgActivity";
     //intent key
     public static final String INTENT_URLS_ACTION = "uris";
     //ViewPage指针
@@ -204,6 +204,7 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
 
     private class ImagePagerAdapter extends PagerAdapter {
         private ArrayList<String> mAllImgList;
+        private FlexibleImageView mFlexibleImageView;
 
         public ImagePagerAdapter(ArrayList<String> imgAllList) {
             mPbHint.setVisibility(View.VISIBLE);
@@ -227,8 +228,8 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
 
         @Override
         public FlexibleImageView instantiateItem(final ViewGroup container, final int position) {
-//            Log.i("main", TAG + position);
-            final FlexibleImageView imageView = new FlexibleImageView(PhotoShowMaxImgActivity.this);
+            Log.i("main", TAG + position);
+            mFlexibleImageView = new FlexibleImageView(PhotoShowMaxImgActivity.this);
             mPbHint.setVisibility(View.VISIBLE);
             BitmapCache.getBitmapCache().reduceMaxImageSize(new File(mAllImgList.get(position)), new BitmapCache.OnMaxImgLoadListener() {
                 @Override
@@ -237,21 +238,15 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
                         @Override
                         public void run() {
                             mPbHint.setVisibility(View.GONE);
-                            imageView.setImageBitmap(b.getBitmap());
-
-                            //已经存在 才移除
-                            ViewParent vp = imageView.getParent();
-                            if (vp != null) {
-                                ViewGroup parent = (ViewGroup) vp;
-                                parent.removeView(imageView);
-                            }
-                            container.addView(imageView);
+                            mFlexibleImageView.setImageBitmap(b.getBitmap());
+                            container.removeView(mFlexibleImageView);
+                            container.addView(mFlexibleImageView);
                         }
                     });
                 }
             });
 
-            imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+            mFlexibleImageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                 @Override
                 public void onPhotoTap(View view, float x, float y) {
                     if (mIsShowToolBar) {
@@ -274,7 +269,7 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
                 }
             });
 
-            return imageView;
+            return mFlexibleImageView;
         }
 
     }
