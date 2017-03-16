@@ -25,15 +25,15 @@
             android:padding="2dp"
             android:scaleType="fitXY"/>
 
-
         <ImageView
+            android:id="@+id/iv_select_state"
             android:layout_width="20dp"
-            android:id="@+id/iv"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:src="@mipmap/right_switch"/>
+            android:src="@mipmap/checkbox_pressed"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_photo_name"
@@ -42,7 +42,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@id/iv"
+            android:layout_toLeftOf="@id/iv_select_state"
             android:layout_toRightOf="@id/iv_photo_icon"
             android:ellipsize="end"
             android:maxLines="1"

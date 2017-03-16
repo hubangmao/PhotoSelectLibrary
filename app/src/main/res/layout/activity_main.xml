@@ -12,13 +12,21 @@
         android:onClick="onClick"
         android:text="选择图片"/>
 
-    <TextView
-        android:id="@+id/tv_path"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:padding="6dp"
-        android:text=""
-        android:textColor="#3c3c3c"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:padding="6dp"
+            android:text="选择的图片路径如下:"
+            android:textColor="#3c3c3c"
+            android:textSize="16sp"/>
+
+    </ScrollView>
+
 
 </LinearLayout>

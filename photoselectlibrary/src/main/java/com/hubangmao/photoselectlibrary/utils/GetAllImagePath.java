@@ -9,6 +9,8 @@ import android.provider.MediaStore;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -68,19 +70,33 @@ public class GetAllImagePath {
             //获取图片的名称
             String name = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME));
             //获取图片的生成日期
-            //String date = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            String date = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN));
             //获取图片的详细信息
             //String desc = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DESCRIPTION));
             // 获取图片的路径
             String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-            //所有图片路径
-            FileBean fileBean = new FileBean();
-            fileBean.setImgFile(new File(path));
-            fileBean.setFileName(name);
-            mAllImagePathList.add(fileBean);
+            File file = new File(path);
+            //大于1kb
+            if (file.length() >= 1024) {
+                FileBean fileBean = new FileBean();
+                fileBean.setImgFile(file);
+                fileBean.setFileName(name);
+                fileBean.setImgDate(Long.parseLong(date));
+                //所有图片路径
+                mAllImagePathList.add(fileBean);
+            }
         }
-        mPhotoPathMapSet.put("最近图片", mAllImagePathList);
 
+        //最新的图片排前面
+        Collections.sort(mAllImagePathList, new Comparator<FileBean>() {
+            @Override
+            public int compare(FileBean left, FileBean right) {
+                int i = (int) ((right.getImgDate()) - (left.getImgDate()));
+                return i;
+            }
+        });
+
+        mPhotoPathMapSet.put("全部图片", mAllImagePathList);
         ArrayList<FileBean> photoFileList;
 
         //所有图片文件夹名称
@@ -115,13 +131,9 @@ public class GetAllImagePath {
             }
 
         }
-        /*Log.i("main", "文件夹个数" + mPhotoPathMapSet.size());
-        Log.i("main", "文件夹DCIM/图片数量" + mPhotoPathMapSet.get("DCIM"));
-        Log.i("main", "文件夹Screenshots/图片数量" + mPhotoPathMapSet.get("Screenshots"));*/
 
         mHandler.sendEmptyMessage(LOAD_IMAGE_PATH_OK);
     }
-
 
     private void initHandler() {
         mHandler = new Handler() {

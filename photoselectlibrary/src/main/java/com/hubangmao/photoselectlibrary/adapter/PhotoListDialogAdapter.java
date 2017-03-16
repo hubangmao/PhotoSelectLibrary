@@ -27,12 +27,13 @@ import java.util.Set;
  */
 //查看全部图片 适配器
 public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialogHolder> {
-    private  final String TAG ="PhotoListDialogAdapter";
+    private final String TAG = "PhotoListDialogAdapter";
     private Context mContext;
     private HashMap<String, ArrayList<FileBean>> mPhotoPathMapList = new HashMap<>();
 
     private ArrayList<String> mMapKeyList = new ArrayList<>();
     private static PhotoListener.OnPhotoItemClickListener mOnPhotoItemClickListener;
+    public static String mSelPhotoName = "全部图片";
 
     public static void setOnPhotoItemClickListener(PhotoListener.OnPhotoItemClickListener mOnPhotoItemClickListener) {
         PhotoListDialogAdapter.mOnPhotoItemClickListener = mOnPhotoItemClickListener;
@@ -51,7 +52,9 @@ public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialog
         Iterator<String> iterator = set.iterator();
 
         while (iterator.hasNext()) {
-            mMapKeyList.add(iterator.next());
+            String name = iterator.next();
+
+            mMapKeyList.add(name);
         }
 
     }
@@ -65,9 +68,16 @@ public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialog
     @Override
     public void onBindViewHolder(final PhotoListDialogHolder holder, final int position) {
         final String name = mMapKeyList.get(position);
-
         ArrayList<FileBean> fileList = mPhotoPathMapList.get(name);
+        //第一张图片作为相册图片
         BitmapCache.getBitmapCache().setMinImgBitmap(fileList.get(0).getImgFile(), holder.mIvPhotoItem);
+        //等于选中的相册名称显示选中指示
+        if (mSelPhotoName.equals(name)) {
+            holder.mIvSelectState.setVisibility(View.VISIBLE);
+        } else {
+            holder.mIvSelectState.setVisibility(View.GONE);
+        }
+
         holder.mTvName.setText(name + "(" + fileList.size() + ") 张");
         holder.mPhotoItem.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.photo_item_enter));
 
@@ -75,6 +85,7 @@ public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialog
             @Override
             public void onClick(View v) {
                 mOnPhotoItemClickListener.onPhotoItemClickListener(mPhotoPathMapList.get(mMapKeyList.get(position)), name);
+                mSelPhotoName = name;
             }
         });
 
@@ -90,7 +101,7 @@ public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialog
 
 class PhotoListDialogHolder extends RecyclerView.ViewHolder {
     CardView mPhotoItem;
-    ImageView mIvPhotoItem;
+    ImageView mIvPhotoItem, mIvSelectState;
     TextView mTvName;
 
 
@@ -98,6 +109,7 @@ class PhotoListDialogHolder extends RecyclerView.ViewHolder {
         super(itemView);
         mPhotoItem = (CardView) itemView.findViewById(R.id.cv_photo_item);
         mIvPhotoItem = (ImageView) itemView.findViewById(R.id.iv_photo_icon);
+        mIvSelectState = (ImageView) itemView.findViewById(R.id.iv_select_state);
         mTvName = (TextView) itemView.findViewById(R.id.tv_photo_name);
     }
 

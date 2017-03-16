@@ -5,7 +5,8 @@
     android:id="@+id/cv_sel_img_layout"
     android:layout_width="100dp"
     android:layout_height="100dp"
-    android:layout_marginTop="20dp"
+    android:layout_gravity="center"
+    android:layout_marginTop="15dp"
     card_view:cardCornerRadius="4dp">
 
     <RelativeLayout

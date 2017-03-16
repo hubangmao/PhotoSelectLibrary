@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
                 if (selectImagePathLists == null) {
                     return;
                 }
+
+                StringBuilder sb = new StringBuilder("选择的图片路径如下:\n");
+                for (File f : selectImagePathLists) {
+                    sb.append(f.getAbsolutePath() + "\n\n ");
+                }
+                mTvPath.setText(sb.toString());
             }
         });
 

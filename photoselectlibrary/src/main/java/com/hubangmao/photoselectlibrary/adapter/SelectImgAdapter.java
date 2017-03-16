@@ -25,6 +25,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.hubangmao.photoselectlibrary.activity.PhotoShowMaxImgActivity.index;
+
 /**
  * Created by 胡邦茂 on 2017/2/22.
  *
@@ -49,12 +51,25 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
         mContext = context;
         mAllImagePathList.addAll(allImagePathList);
         mImgSelStateSet.putAll(imgSelStateSet);
-        initCache(pbLoadHint);
-
+        initLoadImgThread(pbLoadHint);
     }
 
-    //初始化缓存 小图
-    private void initCache(final ProgressBar pbLoadHint) {
+    public void addItemData(ArrayList<FileBean> allImagePathList, HashMap<File, Boolean> imgSelStateSet, ProgressBar pbLoadHint) {
+        mItemIsAnim = true;
+        mAllImagePathList.clear();
+        mAllImagePathList.addAll(allImagePathList);
+
+        mImgSelStateSet.clear();
+        mImgSelStateSet.putAll(imgSelStateSet);
+        initLoadImgThread(pbLoadHint);
+    }
+
+
+    private void initLoadImgThread(final ProgressBar pbLoadHint) {
+        mAllItemPathList.clear();
+        notifyDataSetChanged();
+        //打开小图缓存
+        BitmapCache.mIsStopLoadMinImg = false;
         new Thread() {
             @Override
             public void run() {
@@ -73,22 +88,11 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
                         });
                     }
                 });
+
             }
         }.start();
-    }
 
-    public void addItemData(ArrayList<FileBean> allImagePathList, HashMap<File, Boolean> imgSelStateSet, ProgressBar pbLoadHint) {
-        mItemIsAnim = true;
-        mAllImagePathList.clear();
-        mAllImagePathList.addAll(allImagePathList);
 
-        mImgSelStateSet.clear();
-        mImgSelStateSet.putAll(imgSelStateSet);
-
-        mAllItemPathList.clear();
-        initCache(pbLoadHint);
-
-        notifyDataSetChanged();
     }
 
 
@@ -110,7 +114,6 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
         }
 
         //选中显示灰色背景
-
         if (cbSelState) {
             holder.mKeepOutLayout.setVisibility(View.VISIBLE);
         } else {
@@ -132,7 +135,7 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
                 Intent intent = new Intent(mContext, PhotoShowMaxImgActivity.class);
                 intent.putStringArrayListExtra(PhotoShowMaxImgActivity.INTENT_URLS_ACTION, fileArrayList);
 
-                PhotoShowMaxImgActivity.index = position;
+                index = position;
                 mContext.startActivity(intent);
             }
         });
@@ -171,9 +174,8 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
     public int getItemCount() {
         return mAllItemPathList == null ? 0 : mAllItemPathList.size();
     }
-
-
 }
+
 
 class SelectImgHolder extends RecyclerView.ViewHolder {
     CardView mCvSelImgLayout;

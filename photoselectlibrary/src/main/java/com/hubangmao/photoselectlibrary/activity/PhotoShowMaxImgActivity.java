@@ -45,6 +45,7 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
     //图片url
     private ArrayList<String> mFileBeanList = new ArrayList<>();
     private ViewPagerFixed mViewPager;
+    private ImagePagerAdapter mImagePagerAdapter;
     private RelativeLayout mActionBarLayout, mBottomToolLayout;
     private TextView mTvName, mTvHint;
     //完成
@@ -83,21 +84,20 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
         if (mFileBeanList == null) {
             return;
         }
-        mViewPager.setAdapter(new ImagePagerAdapter(mFileBeanList));
-
-
+        mImagePagerAdapter = new ImagePagerAdapter(mFileBeanList);
+        mViewPager.setAdapter(mImagePagerAdapter);
         //图片名称显示
-        if (mFileBeanList != null) {
-            if (mFileBeanList.size() > 0) {
-                String s = mFileBeanList.get(0);
-                mTvName.setText(s.substring(s.lastIndexOf("/") + 1, s.length()));
-            }
+        if (mFileBeanList.size() > 0) {
+            String s = mFileBeanList.get(0);
+            mTvName.setText(s.substring(s.lastIndexOf("/") + 1, s.length()));
         }
 
         //指针小于等于集合
         if (index <= mFileBeanList.size()) {
             mViewPager.setCurrentItem(index);
         }
+        mImagePagerAdapter.notifyDataSetChanged();
+
         //初始化当前位置
         mTvHint.setText(index + 1 + "/" + mFileBeanList.size());
 
@@ -228,7 +228,9 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
 
         @Override
         public FlexibleImageView instantiateItem(final ViewGroup container, final int position) {
-            Log.i("main", TAG + position);
+            Log.i("main", "胡" + position);
+            Log.i("main", "胡mAllImgList=" + mAllImgList.size());
+
             mFlexibleImageView = new FlexibleImageView(PhotoShowMaxImgActivity.this);
             mPbHint.setVisibility(View.VISIBLE);
             BitmapCache.getBitmapCache().reduceMaxImageSize(new File(mAllImgList.get(position)), new BitmapCache.OnMaxImgLoadListener() {
@@ -238,6 +240,7 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
                         @Override
                         public void run() {
                             mPbHint.setVisibility(View.GONE);
+                            Log.i("main", "邦茂" + position);
                             mFlexibleImageView.setImageBitmap(b.getBitmap());
                             container.removeView(mFlexibleImageView);
                             container.addView(mFlexibleImageView);
@@ -245,7 +248,6 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
                     });
                 }
             });
-
             mFlexibleImageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                 @Override
                 public void onPhotoTap(View view, float x, float y) {

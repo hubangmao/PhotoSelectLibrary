@@ -103,7 +103,6 @@ public class SelectImgActivity extends PhotoBaseActivity implements
         mSelectImgRvManager = new GridLayoutManager(this, 3);
         mRVAllImgView.setAdapter(mSelectImgAdapter);
         mRVAllImgView.setLayoutManager(mSelectImgRvManager);
-
         //大图查看时 单张图片状态改变
         PhotoShowMaxImgActivity.setOnAImgSelectListener(this);
         //大图查看时 点击完成
@@ -139,8 +138,6 @@ public class SelectImgActivity extends PhotoBaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        //打开小图缓存
-        BitmapCache.mIsStopLoadMinImg = false;
         //大图查看切换回来时更新选中状态
         mPbLoadHint.setVisibility(View.VISIBLE);
         if (mSelectImgAdapter != null) {
@@ -227,9 +224,17 @@ public class SelectImgActivity extends PhotoBaseActivity implements
         mPhotoDialog.show();
     }
 
+    private String mPhotoName = "全部图片";
+
     //相册被点击时回调
     @Override
     public void onPhotoItemClickListener(ArrayList<FileBean> photoImagePathList, String photoName) {
+        if (mPhotoName.equals(photoName)) {
+            mPhotoDialog.dismiss();
+            return;
+        }
+
+        mPhotoName = photoName;
         mTvTitle.setText(photoName);
         mImageBarrelList = photoImagePathList;
         if (mSelectImgAdapter != null) {
@@ -339,7 +344,6 @@ public class SelectImgActivity extends PhotoBaseActivity implements
         if (isClearBitmap) {
             BitmapCache.destroy();
         }
-
         //所有图片集合
         if (mAllImagePathList != null) {
             mAllImagePathList.clear();
@@ -355,6 +359,7 @@ public class SelectImgActivity extends PhotoBaseActivity implements
         }
         SET_SELECT_MAX_NUM = 100;
         IS_SELECT_IMG = true;
+        PhotoListDialogAdapter.mSelPhotoName = "全部图片";
     }
 
     @Override

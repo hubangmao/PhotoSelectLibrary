@@ -13,14 +13,17 @@ public class FileBean {
     private String mFileName;
     //图片路径
     private File mImgFile;
+    //时间排序使用
+    private long mImgDate;
     //Bitmap
     private Bitmap mBitmap;
 
-    public FileBean() {
-    }
-
     public String getFileName() {
         return mFileName;
+    }
+
+    //
+    public FileBean() {
     }
 
     public void setFileName(String fileName) {
@@ -33,6 +36,14 @@ public class FileBean {
 
     public void setImgFile(File imgFile) {
         mImgFile = imgFile;
+    }
+
+    public long getImgDate() {
+        return mImgDate;
+    }
+
+    public void setImgDate(long imgDate) {
+        mImgDate = imgDate;
     }
 
     public Bitmap getBitmap() {

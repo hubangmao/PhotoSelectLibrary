@@ -117,6 +117,9 @@ public class BitmapCache {
         if (bitmap == null) {
             String key = file.getAbsolutePath();
             bitmap = getBitmap(file, 150, 150);
+            if (bitmap == null) {
+                return;
+            }
             mMinCaches.put(key, bitmap);
             bitmap = mMinCaches.get(file.getAbsolutePath());
         }
