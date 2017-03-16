@@ -65,7 +65,6 @@ public class SelectImgActivity extends PhotoBaseActivity implements
     //提示
     private ProgressBar mPbLoadHint;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -229,6 +228,7 @@ public class SelectImgActivity extends PhotoBaseActivity implements
     //相册被点击时回调
     @Override
     public void onPhotoItemClickListener(ArrayList<FileBean> photoImagePathList, String photoName) {
+        //点击相册相等 不加载数据
         if (mPhotoName.equals(photoName)) {
             mPhotoDialog.dismiss();
             return;
@@ -359,7 +359,6 @@ public class SelectImgActivity extends PhotoBaseActivity implements
         }
         SET_SELECT_MAX_NUM = 100;
         IS_SELECT_IMG = true;
-        PhotoListDialogAdapter.mSelPhotoName = "全部图片";
     }
 
     @Override

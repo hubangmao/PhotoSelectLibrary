@@ -3,6 +3,7 @@ package com.hubangmao.photoselectlibrary.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,7 +39,6 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
     private Context mContext;
     private boolean mItemIsAnim = true;
     private ArrayList<FileBean> mAllImagePathList = new ArrayList<>();
-    private ArrayList<FileBean> mAllItemPathList = new ArrayList<>();
     private HashMap<File, Boolean> mImgSelStateSet = new HashMap<>();
     //一张图片 选择状态监听
     private PhotoListener.OnAImgSelectStateListener mOnImgSelectListener;
@@ -55,7 +55,6 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
     }
 
     public void addItemData(ArrayList<FileBean> allImagePathList, HashMap<File, Boolean> imgSelStateSet, ProgressBar pbLoadHint) {
-        mItemIsAnim = true;
         mAllImagePathList.clear();
         mAllImagePathList.addAll(allImagePathList);
 
@@ -64,9 +63,7 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
         initLoadImgThread(pbLoadHint);
     }
 
-
     private void initLoadImgThread(final ProgressBar pbLoadHint) {
-        mAllItemPathList.clear();
         notifyDataSetChanged();
         //打开小图缓存
         BitmapCache.mIsStopLoadMinImg = false;
@@ -75,15 +72,20 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
             public void run() {
                 BitmapCache.getBitmapCache().initPhotoIconCache(mAllImagePathList, new BitmapCache.OnMinImgLoadListener() {
                     @Override
-                    public void onMinImgLoadListener(final FileBean f) {
+                    public void onMinImgLoadListener(final FileBean f, final int index) {
                         ((Activity) mContext).runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (pbLoadHint.getVisibility() == View.VISIBLE) {
                                     pbLoadHint.setVisibility(View.GONE);
                                 }
-                                mAllItemPathList.add(f);
-                                notifyItemChanged(mAllItemPathList.size(), f);
+                                if (index >= mAllImagePathList.size()) {
+                                    return;
+                                }
+
+                                mAllImagePathList.remove(index);
+                                mAllImagePathList.add(index, f);
+                                notifyItemChanged(index, f);
                             }
                         });
                     }
@@ -95,7 +97,6 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
 
     }
 
-
     @Override
     public SelectImgHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new SelectImgHolder(LayoutInflater.from(mContext).inflate(R.layout.item_image_select, parent, false));
@@ -103,9 +104,15 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
 
     @Override
     public void onBindViewHolder(final SelectImgHolder holder, final int position) {
-        final FileBean fileBean = mAllItemPathList.get(position);
+        final FileBean fileBean = mAllImagePathList.get(position);
+        Bitmap bitmap = fileBean.getBitmap();
+        if (bitmap == null) {
+            holder.mIvItem.setImageResource(R.mipmap.load_err_icon);
+            holder.mCbSelImg.setChecked(false);
+            return;
+        }
 
-        holder.mIvItem.setImageBitmap(fileBean.getBitmap());
+        holder.mIvItem.setImageBitmap(bitmap);
         boolean cbSelState = mImgSelStateSet.get(fileBean.getImgFile());
         holder.mCbSelImg.setChecked(cbSelState);
 
@@ -162,7 +169,7 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
             }
         });
 
-        //绘制完后就不做动画
+        //绘制完后就不做动画 动画执行过快会留下 item的印记
         if (position + 1 == mAllImagePathList.size()) {
             mItemIsAnim = false;
         }
@@ -172,7 +179,7 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
 
     @Override
     public int getItemCount() {
-        return mAllItemPathList == null ? 0 : mAllItemPathList.size();
+        return mAllImagePathList == null ? 0 : mAllImagePathList.size();
     }
 }
 

@@ -71,7 +71,7 @@ public class BitmapCache {
 
     //小图缓存完成后回调
     public interface OnMinImgLoadListener {
-        void onMinImgLoadListener(FileBean f);
+        void onMinImgLoadListener(FileBean f,int index);
     }
 
     //点击查看大图时 停止加载
@@ -94,7 +94,7 @@ public class BitmapCache {
             Bitmap bitmap = mMinCaches.get(f.getImgFile().getAbsolutePath());
             if (bitmap != null) {
                 f.setBitmap(bitmap);
-                mOnMinImgLoadListener.onMinImgLoadListener(f);
+                mOnMinImgLoadListener.onMinImgLoadListener(f,i);
                 continue;
             }
 
@@ -105,7 +105,7 @@ public class BitmapCache {
                 bitmap = mMinCaches.get(key);
             }
             f.setBitmap(bitmap);
-            mOnMinImgLoadListener.onMinImgLoadListener(f);
+            mOnMinImgLoadListener.onMinImgLoadListener(f,i);
         }
     }
 
@@ -154,7 +154,7 @@ public class BitmapCache {
     }
 
 
-    synchronized public void reduceMaxImageSize(final File file, final OnMaxImgLoadListener onMaxImgLoadListener) {
+    synchronized public void asyReduceMaxImageSize(final File file, final OnMaxImgLoadListener onMaxImgLoadListener) {
         new Thread() {
             @Override
             public void run() {

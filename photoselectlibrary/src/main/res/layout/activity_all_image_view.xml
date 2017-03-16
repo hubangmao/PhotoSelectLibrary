@@ -74,15 +74,23 @@
         android:textColor="@color/action_bar_text_color"
         android:textSize="@dimen/action_bar_text_size"/>
 
+    <View
+        android:id="@+id/bar_view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_above="@id/btn_photo"
+        android:background="#d0cece"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_view_all_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btn_photo"
+        android:layout_above="@id/bar_view"
         android:layout_below="@id/layout_action_bar"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="20dp"
-        android:paddingLeft="10dp"
+        android:padding="4dp"
+        android:scrollbarSize="1dp"
+        android:scrollbarTrackVertical="@drawable/rv_sb_theme"
         android:scrollbars="vertical"/>
 
     <ProgressBar

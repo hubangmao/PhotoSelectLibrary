@@ -1,10 +1,9 @@
 package com.hubangmao.photoselectlibrary.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import com.hubangmao.photoselectlibrary.R;
 import com.hubangmao.photoselectlibrary.activity.listener.PhotoListener;
-import com.hubangmao.photoselectlibrary.activity.listener.SlipRightFinishActivityListener;
 import com.hubangmao.photoselectlibrary.utils.BitmapCache;
 import com.hubangmao.photoselectlibrary.utils.FileBean;
 import com.hubangmao.photoselectlibrary.zoom.FlexibleImageView;
@@ -96,8 +94,6 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
         if (index <= mFileBeanList.size()) {
             mViewPager.setCurrentItem(index);
         }
-        mImagePagerAdapter.notifyDataSetChanged();
-
         //初始化当前位置
         mTvHint.setText(index + 1 + "/" + mFileBeanList.size());
 
@@ -142,7 +138,6 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
                 if (mFileBeanList.size() > 0) {
                     mTvHint.setText(position + 1 + "/" + mFileBeanList.size());
                 }
-                //标题集合长度 与 图片链接集合长度相等
                 if (mFileBeanList.size() > 0) {
                     String s = mFileBeanList.get(position);
                     mTvName.setText(s.substring(s.lastIndexOf("/") + 1, s.length()));
@@ -204,11 +199,17 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
 
     private class ImagePagerAdapter extends PagerAdapter {
         private ArrayList<String> mAllImgList;
-        private FlexibleImageView mFlexibleImageView;
+        private ArrayList<FlexibleImageView> mFILists;
+        private Activity mActivity = PhotoShowMaxImgActivity.this;
+        private int mChildCount;
 
         public ImagePagerAdapter(ArrayList<String> imgAllList) {
             mPbHint.setVisibility(View.VISIBLE);
             mAllImgList = imgAllList;
+            mFILists = new ArrayList<>();
+            for (int i = 0; i < mAllImgList.size(); i++) {
+                mFILists.add(new FlexibleImageView(mActivity));
+            }
         }
 
 
@@ -224,31 +225,33 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView(mFILists.get(position));
         }
 
         @Override
         public FlexibleImageView instantiateItem(final ViewGroup container, final int position) {
-            Log.i("main", "胡" + position);
-            Log.i("main", "胡mAllImgList=" + mAllImgList.size());
-
-            mFlexibleImageView = new FlexibleImageView(PhotoShowMaxImgActivity.this);
             mPbHint.setVisibility(View.VISIBLE);
-            BitmapCache.getBitmapCache().reduceMaxImageSize(new File(mAllImgList.get(position)), new BitmapCache.OnMaxImgLoadListener() {
+            final FlexibleImageView flexibleImageView = mFILists.get(position);
+
+            BitmapCache.getBitmapCache().asyReduceMaxImageSize(new File(mAllImgList.get(position)), new BitmapCache.OnMaxImgLoadListener() {
                 @Override
                 public void onMaxImgLoadListener(final FileBean b) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             mPbHint.setVisibility(View.GONE);
-                            Log.i("main", "邦茂" + position);
-                            mFlexibleImageView.setImageBitmap(b.getBitmap());
-                            container.removeView(mFlexibleImageView);
-                            container.addView(mFlexibleImageView);
+                            flexibleImageView.setImageBitmap(b.getBitmap());
+
+                            if (flexibleImageView.getParent() == container) {
+                                container.removeView(flexibleImageView);
+                            }
+                            container.addView(flexibleImageView);
+
                         }
                     });
                 }
             });
-            mFlexibleImageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+            flexibleImageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                 @Override
                 public void onPhotoTap(View view, float x, float y) {
                     if (mIsShowToolBar) {
@@ -270,28 +273,24 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
                     }
                 }
             });
-
-            return mFlexibleImageView;
+            return flexibleImageView;
         }
 
-    }
-
-    //右滑关闭Activity 监听
-    private SlipRightFinishActivityListener mSlipRightFinishActivityListener;
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (mSlipRightFinishActivityListener == null) {
-            mSlipRightFinishActivityListener = new SlipRightFinishActivityListener();
+        @Override
+        public void notifyDataSetChanged() {
+            mChildCount = getCount();
+            super.notifyDataSetChanged();
         }
 
-        if (mViewPager.getCurrentItem() == 0) {
-            if (mSlipRightFinishActivityListener.initListener(event)) {
-                finish();
+        //更新视图
+        @Override
+        public int getItemPosition(Object object) {
+            if (mChildCount > 0) {
+                mChildCount--;
+                return POSITION_NONE;
             }
+            return super.getItemPosition(object);
         }
-
-        return super.dispatchTouchEvent(event);
     }
 
     @Override

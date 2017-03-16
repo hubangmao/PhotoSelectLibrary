@@ -33,7 +33,6 @@ public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialog
 
     private ArrayList<String> mMapKeyList = new ArrayList<>();
     private static PhotoListener.OnPhotoItemClickListener mOnPhotoItemClickListener;
-    public static String mSelPhotoName = "全部图片";
 
     public static void setOnPhotoItemClickListener(PhotoListener.OnPhotoItemClickListener mOnPhotoItemClickListener) {
         PhotoListDialogAdapter.mOnPhotoItemClickListener = mOnPhotoItemClickListener;
@@ -65,32 +64,40 @@ public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialog
         return new PhotoListDialogHolder(LayoutInflater.from(mContext).inflate(R.layout.item_photo_select, parent, false));
     }
 
+    public static String mSelPhotoName = "全部图片";
+    private String mPhotoName;
+
     @Override
     public void onBindViewHolder(final PhotoListDialogHolder holder, final int position) {
-        final String name = mMapKeyList.get(position);
-        ArrayList<FileBean> fileList = mPhotoPathMapList.get(name);
+        mPhotoName = mMapKeyList.get(position);
+        ArrayList<FileBean> fileList = mPhotoPathMapList.get(mPhotoName);
         //第一张图片作为相册图片
         BitmapCache.getBitmapCache().setMinImgBitmap(fileList.get(0).getImgFile(), holder.mIvPhotoItem);
+        mPhotoName = getSubPhotoName(mPhotoName);
         //等于选中的相册名称显示选中指示
-        if (mSelPhotoName.equals(name)) {
+        if (mSelPhotoName.equals(mPhotoName)) {
             holder.mIvSelectState.setVisibility(View.VISIBLE);
         } else {
             holder.mIvSelectState.setVisibility(View.GONE);
         }
-
-        holder.mTvName.setText(name + "(" + fileList.size() + ") 张");
+        holder.mTvName.setText(mPhotoName + "(" + fileList.size() + ") 张");
         holder.mPhotoItem.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.photo_item_enter));
 
         holder.mPhotoItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnPhotoItemClickListener.onPhotoItemClickListener(mPhotoPathMapList.get(mMapKeyList.get(position)), name);
-                mSelPhotoName = name;
+                mSelPhotoName = getSubPhotoName(mMapKeyList.get(position));
+                mOnPhotoItemClickListener.onPhotoItemClickListener(mPhotoPathMapList.get(mMapKeyList.get(position)), mSelPhotoName);
             }
         });
-
     }
 
+    private String getSubPhotoName(String defStr) {
+        if (defStr.length() > 12) {
+            defStr = defStr.substring(0, 12);
+        }
+        return defStr;
+    }
 
     @Override
     public int getItemCount() {
