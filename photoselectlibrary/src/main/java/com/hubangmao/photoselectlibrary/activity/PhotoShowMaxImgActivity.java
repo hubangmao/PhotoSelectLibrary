@@ -201,9 +201,8 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
         private ArrayList<String> mAllImgList;
         private ArrayList<FlexibleImageView> mFILists;
         private Activity mActivity = PhotoShowMaxImgActivity.this;
-        private int mChildCount;
 
-        public ImagePagerAdapter(ArrayList<String> imgAllList) {
+        private ImagePagerAdapter(ArrayList<String> imgAllList) {
             mPbHint.setVisibility(View.VISIBLE);
             mAllImgList = imgAllList;
             mFILists = new ArrayList<>();
@@ -274,22 +273,6 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
                 }
             });
             return flexibleImageView;
-        }
-
-        @Override
-        public void notifyDataSetChanged() {
-            mChildCount = getCount();
-            super.notifyDataSetChanged();
-        }
-
-        //更新视图
-        @Override
-        public int getItemPosition(Object object) {
-            if (mChildCount > 0) {
-                mChildCount--;
-                return POSITION_NONE;
-            }
-            return super.getItemPosition(object);
         }
     }
 

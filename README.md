@@ -2,7 +2,7 @@
 
 [点击查看视频](http://www.17sysj.com/video/lpds_11b08aa57785a)<br/> 
 [使用](https://github.com/hubangmao/PhotoSelectLibrary/blob/master/app/src/main/java/com/hbm/hbm/MainActivity.java)<br/><br/> 
-[Apk下载](http://download.csdn.net/download/guzuoi/9775531)<br/><br/> 
+
 
 ###使用
 
@@ -38,14 +38,14 @@
 ```
 
 <br/> 
-    ### 包结构介绍.<br/>
-   #  1.<br/>
+     包结构介绍.<br/>
+     1.<br/>
     activity包  =图片选择Activity+大图查看Activity<br/>
-   #  2.<br/>
+     2.<br/>
     adapter包   =图片选择适配器+相册分类适配器<br/>
-   #  3.<br/>
+     3.<br/>
     utils包     =图片缓存+拿到图片分类路径<br/>
-   #  4.<br/>
+    4.<br/>
     zoom包      =图片手势操作<br/>
 
 
