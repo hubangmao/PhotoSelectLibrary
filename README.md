@@ -39,15 +39,12 @@
 
 <br/> 
      包结构介绍.<br/>
-     1.<br/>
-    activity包  =图片选择Activity+大图查看Activity<br/>
-     2.<br/>
-    adapter包   =图片选择适配器+相册分类适配器<br/>
-     3.<br/>
-    utils包     =图片缓存+拿到图片分类路径<br/>
-    4.<br/>
-    zoom包      =图片手势操作<br/>
+     1. activity包  =图片选择Activity+大图查看Activity<br/>
+     2.adapter包   =图片选择适配器+相册分类适配器<br/>
+     3.utils包     =图片缓存+拿到图片分类路径<br/>
+     4. zoom包      =图片手势操作<br/>
 
+   
 
   导入可能会遇到的异常<br/>
     该库的Theme如下 与使用者库不一需要调节两边为统一的主题哦<br/>
