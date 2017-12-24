@@ -7,14 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.hubangmao.photoselectlibrary.R;
-
 
 public abstract class PhotoBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         initTranslucentStatusBar();
-        overridePendingTransition(R.anim.photo_activity_enter, 0);
         super.onCreate(savedInstanceState);
 
     }
@@ -55,11 +52,5 @@ public abstract class PhotoBaseActivity extends AppCompatActivity {
 
     //初始化监听事件
     public void setListener() {
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(0, R.anim.photo_activity_exit);
     }
 }

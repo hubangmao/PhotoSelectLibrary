@@ -1,8 +1,8 @@
 package com.hbm.hbm;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,10 +10,10 @@ import com.hubangmao.photoselectlibrary.activity.SelectImgActivity;
 import com.hubangmao.photoselectlibrary.activity.listener.PhotoListener;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-    TextView mTvPath;
+    private TextView mTvPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,19 +25,20 @@ public class MainActivity extends AppCompatActivity {
     //一个页面如果有多次选取图片 功能 需要先清除之前一次选中状态  SelectImgActivity.destroy(false);
 
     public void onClick(View view) {
-        //第一步 图片选择成功回调
 
+        //第一步 图片选择成功回调
         SelectImgActivity.setOnImgSelectOkListener(new PhotoListener.OnImgSelectOkListener() {
             @Override
-            public void onImgSelectOkListener(ArrayList<File> selectImagePathLists) {
+            public void onImgSelectOkListener(Set<File> selectImagePathLists) {
                 if (selectImagePathLists == null) {
                     return;
                 }
 
                 StringBuilder sb = new StringBuilder("选择的图片路径如下:\n");
                 for (File f : selectImagePathLists) {
-                    sb.append(f.getAbsolutePath() + "\n\n ");
+                    sb.append(f.getAbsolutePath()).append("\n\n");
                 }
+
                 mTvPath.setText(sb.toString());
             }
         });

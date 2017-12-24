@@ -1,13 +1,12 @@
 package com.hubangmao.photoselectlibrary.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hubangmao.photoselectlibrary.R;
@@ -17,7 +16,6 @@ import com.hubangmao.photoselectlibrary.utils.FileBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -32,10 +30,10 @@ public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialog
     private HashMap<String, ArrayList<FileBean>> mPhotoPathMapList = new HashMap<>();
 
     private ArrayList<String> mMapKeyList = new ArrayList<>();
-    private static PhotoListener.OnPhotoItemClickListener mOnPhotoItemClickListener;
+    private PhotoListener.OnPhotoItemClickListener mOnPhotoItemClickListener;
 
-    public static void setOnPhotoItemClickListener(PhotoListener.OnPhotoItemClickListener mOnPhotoItemClickListener) {
-        PhotoListDialogAdapter.mOnPhotoItemClickListener = mOnPhotoItemClickListener;
+    public void setOnPhotoItemClickListener(PhotoListener.OnPhotoItemClickListener onPhotoItemClickListener) {
+        mOnPhotoItemClickListener = onPhotoItemClickListener;
     }
 
     public PhotoListDialogAdapter(Context context, HashMap<String, ArrayList<FileBean>> photoPathMapList) {
@@ -45,16 +43,8 @@ public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialog
 
         mContext = context;
         mPhotoPathMapList.putAll(photoPathMapList);
-
-
         Set<String> set = mPhotoPathMapList.keySet();
-        Iterator<String> iterator = set.iterator();
-
-        while (iterator.hasNext()) {
-            String name = iterator.next();
-
-            mMapKeyList.add(name);
-        }
+        mMapKeyList.addAll(set);
 
     }
 
@@ -81,8 +71,6 @@ public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialog
             holder.mIvSelectState.setVisibility(View.GONE);
         }
         holder.mTvName.setText(mPhotoName + "(" + fileList.size() + ") 张");
-        holder.mPhotoItem.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.photo_item_enter));
-
         holder.mPhotoItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,14 +95,14 @@ public class PhotoListDialogAdapter extends RecyclerView.Adapter<PhotoListDialog
 }
 
 class PhotoListDialogHolder extends RecyclerView.ViewHolder {
-    CardView mPhotoItem;
+    RelativeLayout mPhotoItem;
     ImageView mIvPhotoItem, mIvSelectState;
     TextView mTvName;
 
 
     public PhotoListDialogHolder(View itemView) {
         super(itemView);
-        mPhotoItem = (CardView) itemView.findViewById(R.id.cv_photo_item);
+        mPhotoItem = (RelativeLayout) itemView.findViewById(R.id.rl_photo_item);
         mIvPhotoItem = (ImageView) itemView.findViewById(R.id.iv_photo_icon);
         mIvSelectState = (ImageView) itemView.findViewById(R.id.iv_select_state);
         mTvName = (TextView) itemView.findViewById(R.id.tv_photo_name);

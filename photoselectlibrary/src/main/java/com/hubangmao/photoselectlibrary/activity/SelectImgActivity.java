@@ -2,6 +2,7 @@ package com.hubangmao.photoselectlibrary.activity;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.hubangmao.photoselectlibrary.activity.listener.PhotoListener;
 import com.hubangmao.photoselectlibrary.adapter.PhotoListDialogAdapter;
 import com.hubangmao.photoselectlibrary.adapter.SelectImgAdapter;
 import com.hubangmao.photoselectlibrary.utils.BitmapCache;
+import com.hubangmao.photoselectlibrary.utils.CheckPermission;
 import com.hubangmao.photoselectlibrary.utils.FileBean;
 import com.hubangmao.photoselectlibrary.utils.GetAllImagePath;
 import com.hubangmao.photoselectlibrary.utils.Utils;
@@ -25,14 +27,16 @@ import com.hubangmao.photoselectlibrary.utils.Utils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Created by 胡邦茂 on 2017/2/22.
- *
- * @ about 查看或选择 全部图片
+ * 介绍:  选择图片
+ * author:胡邦茂
+ * CreateDate: 2017/12/23 11:21
  */
+
 public class SelectImgActivity extends PhotoBaseActivity implements
         View.OnClickListener,
         PhotoListener.OnAImgSelectStateListener,
@@ -40,16 +44,18 @@ public class SelectImgActivity extends PhotoBaseActivity implements
         PhotoListener.OnPhotoItemClickListener {
 
     private final String TAG = "SelectImgActivity";
+
+    private CheckPermission mCheckPermission;
     //所有图片路径
     private static ArrayList<FileBean> mAllImagePathList;
     //暂存桶 存储当前选择相册图片
     private static ArrayList<FileBean> mImageBarrelList;
     //图片文件分类
-    private static HashMap<String, ArrayList<FileBean>> mPhotoPathMapList;
+    private HashMap<String, ArrayList<FileBean>> mPhotoPathMapList;
     //存放图片选中状态
     protected static HashMap<File, Boolean> mImgSelStateSet = new HashMap<>();
     //设置最大选择数量 设目标值
-    public static int SET_SELECT_MAX_NUM = 100;
+    public static int SET_SELECT_MAX_NUM = 1;
     //是否可以选择图片 默认可以 超出选择数量 则等于false
     public static boolean IS_SELECT_IMG = true;
 
@@ -82,10 +88,8 @@ public class SelectImgActivity extends PhotoBaseActivity implements
         //不等才初始化 为全选 保留之前初始化状态 调用结束后 后需要调用 destroy() 方法 释放
         if (mAllImagePathList.size() != mImgSelStateSet.size()) {
             Set<String> set = mPhotoPathMapList.keySet();
-            Iterator<String> iterator = set.iterator();
 
-            while (iterator.hasNext()) {
-                String photoName = iterator.next();
+            for (String photoName : set) {
                 ArrayList<FileBean> fileBeen = mPhotoPathMapList.get(photoName);
 
                 //初始化全部未选中
@@ -112,26 +116,41 @@ public class SelectImgActivity extends PhotoBaseActivity implements
 
     @Override
     public void initData() {
-        mPbLoadHint.setVisibility(View.VISIBLE);
-        new GetAllImagePath(this).getImageAllPath(new GetAllImagePath.OnSDImagePathLoadOkListener() {
+        mCheckPermission = new CheckPermission(this, new PhotoListener.OnCheckPermissionStateListener() {
             @Override
-            public void onResponse(ArrayList<FileBean> allImagePathList) {
-                if (allImagePathList == null) {
-                    return;
-                }
-                mAllImagePathList = allImagePathList;
-                mImageBarrelList = mAllImagePathList;
-            }
+            public void onCheckPermissionStateListener() {
 
-            @Override
-            public void onResponse(HashMap<String, ArrayList<FileBean>> photoPathMapSet) {
-                if (photoPathMapSet == null) {
-                    return;
-                }
-                mPhotoPathMapList = photoPathMapSet;
-                initAdapter();
+                mPbLoadHint.setVisibility(View.VISIBLE);
+                new GetAllImagePath(SelectImgActivity.this).getImageAllPath(new GetAllImagePath.OnSDImagePathLoadOkListener() {
+                    @Override
+                    public void onResponse(ArrayList<FileBean> allImagePathList) {
+                        if (allImagePathList == null) {
+                            return;
+                        }
+                        mAllImagePathList = allImagePathList;
+                        mImageBarrelList = mAllImagePathList;
+                    }
+
+                    @Override
+                    public void onResponse(HashMap<String, ArrayList<FileBean>> photoPathMapSet) {
+                        if (photoPathMapSet == null) {
+                            return;
+                        }
+                        mPhotoPathMapList = photoPathMapSet;
+                        initAdapter();
+                    }
+                });
             }
         });
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mCheckPermission.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
     }
 
     @Override
@@ -150,7 +169,6 @@ public class SelectImgActivity extends PhotoBaseActivity implements
     @Override
     public void findViews() {
         mTvTitle = (TextView) findViewById(R.id.tv_title);
-
         mRVAllImgView = (RecyclerView) findViewById(R.id.rv_view_all_img);
 
         //相册
@@ -194,14 +212,9 @@ public class SelectImgActivity extends PhotoBaseActivity implements
     //相册 选择对话框
     private View mPhotoDialogLayout;
     private Dialog mPhotoDialog;
-
     private RecyclerView mRvPhotoItem;
-    private LinearLayoutManager mPhotoManager;
-    private PhotoListDialogAdapter mPhotoAdapter;
 
     private void showPhotoDialog() {
-        //相册Item点击回调
-        PhotoListDialogAdapter.setOnPhotoItemClickListener(this);
 
         if (mPhotoDialogLayout == null) {
             mPhotoDialogLayout = View.inflate(this, R.layout.photo_dialog_layout, null);
@@ -212,14 +225,16 @@ public class SelectImgActivity extends PhotoBaseActivity implements
             mPhotoDialog = new Dialog(this, R.style.dialog_theme);
         }
 
-        mPhotoManager = new LinearLayoutManager(this);
-        mRvPhotoItem.setLayoutManager(mPhotoManager);
-        mPhotoAdapter = new PhotoListDialogAdapter(this, mPhotoPathMapList);
-        mRvPhotoItem.setAdapter(mPhotoAdapter);
+        LinearLayoutManager photoManager = new LinearLayoutManager(this);
+        mRvPhotoItem.setLayoutManager(photoManager);
+        PhotoListDialogAdapter photoAdapter = new PhotoListDialogAdapter(this, mPhotoPathMapList);
+        photoAdapter.setOnPhotoItemClickListener(this);
+        mRvPhotoItem.setAdapter(photoAdapter);
 
         mPhotoDialog.setContentView(mPhotoDialogLayout);
         Window dialogWindow = mPhotoDialog.getWindow();
         dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.photo_anim_style); // 添加动画
         mPhotoDialog.show();
     }
 
@@ -315,7 +330,7 @@ public class SelectImgActivity extends PhotoBaseActivity implements
             return;
         }
 
-        ArrayList<File> finalFileList = new ArrayList<>();
+        Set<File> finalFileList = new HashSet<>();
 
         for (FileBean b : mAllImagePathList) {
             //如果该图片选中
@@ -347,10 +362,6 @@ public class SelectImgActivity extends PhotoBaseActivity implements
         //所有图片集合
         if (mAllImagePathList != null) {
             mAllImagePathList.clear();
-        }
-        //相册分类集合
-        if (mPhotoPathMapList != null) {
-            mPhotoPathMapList.clear();
         }
 
         //图片选中状态集合

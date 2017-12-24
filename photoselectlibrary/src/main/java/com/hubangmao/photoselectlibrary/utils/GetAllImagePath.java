@@ -1,6 +1,7 @@
 package com.hubangmao.photoselectlibrary.utils;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Handler;
@@ -13,12 +14,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 
 /**
- * Created by 胡邦茂 on 2017/2/22.
- *
- * @ about 获取所以图片路径 以及图片所在 文件夹 分类出来
+ * 介绍:  获取所以图片路径 以及图片所在 文件夹 分类出来
+ * author:胡邦茂
+ * CreateDate: 2017/12/24 11:08
  */
 
 public class GetAllImagePath {
@@ -91,8 +91,7 @@ public class GetAllImagePath {
         Collections.sort(mAllImagePathList, new Comparator<FileBean>() {
             @Override
             public int compare(FileBean left, FileBean right) {
-                int i = (int) ((right.getImgDate()) - (left.getImgDate()));
-                return i;
+                return (int) (right.getImgDate() - (left.getImgDate()));
             }
         });
 
@@ -109,13 +108,10 @@ public class GetAllImagePath {
             photoFileParentPathSet.add(phoneName);
         }
 
-        Iterator<String> iterator = photoFileParentPathSet.iterator();
-
 
         //将所以文件夹中的图片 对号入座
-        while (iterator.hasNext()) {
+        for (String value : photoFileParentPathSet) {
             photoFileList = new ArrayList<>();
-            String value = iterator.next();
             for (FileBean f : mAllImagePathList) {
                 //相册名称
                 String phoneName = f.getImgFile().getParent();
@@ -135,6 +131,7 @@ public class GetAllImagePath {
         mHandler.sendEmptyMessage(LOAD_IMAGE_PATH_OK);
     }
 
+    @SuppressLint("HandlerLeak")
     private void initHandler() {
         mHandler = new Handler() {
             @Override

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.hubangmao.photoselectlibrary.R;
 import com.hubangmao.photoselectlibrary.activity.PhotoShowMaxImgActivity;
@@ -117,7 +117,7 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
         holder.mCbSelImg.setChecked(cbSelState);
 
         if (mItemIsAnim) {
-            holder.mCvSelImgLayout.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.select_img_item_enter));
+            holder.mRlSelImgLayout.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.select_img_item_enter));
         }
 
         //选中显示灰色背景
@@ -185,7 +185,7 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
 
 
 class SelectImgHolder extends RecyclerView.ViewHolder {
-    CardView mCvSelImgLayout;
+    RelativeLayout mRlSelImgLayout;
     CheckBox mCbSelImg;
     ImageView mIvItem;
     //遮挡
@@ -193,7 +193,7 @@ class SelectImgHolder extends RecyclerView.ViewHolder {
 
     public SelectImgHolder(View itemView) {
         super(itemView);
-        mCvSelImgLayout = (CardView) itemView.findViewById(R.id.cv_sel_img_layout);
+        mRlSelImgLayout = (RelativeLayout) itemView.findViewById(R.id.rl_sel_img_layout);
         mKeepOutLayout = (LinearLayout) itemView.findViewById(R.id.keep_out_layout);
         mCbSelImg = (CheckBox) itemView.findViewById(R.id.cb_select_img);
         mIvItem = (ImageView) itemView.findViewById(R.id.iv_item);

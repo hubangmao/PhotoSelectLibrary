@@ -21,7 +21,6 @@
                 android:id="@+id/iv_back"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/back_selector"
                 android:clickable="true"
                 android:gravity="center"
                 android:paddingLeft="10dp"
@@ -29,6 +28,7 @@
                 android:scaleType="centerInside"
                 android:src="@mipmap/come_back"
                 android:textColor="@color/action_bar_text_color"/>
+
 
             <TextView
                 android:id="@+id/tv_title"

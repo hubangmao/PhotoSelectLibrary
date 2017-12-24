@@ -4,15 +4,40 @@
         <item name="colorPrimary">@color/action_bar_bg_color</item>
         <item name="colorPrimaryDark">@color/action_bar_bg_color</item>
         <item name="colorAccent">@color/action_bar_bg_color</item>
+        <!-- 设置activity切换动画 -->
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <!--activity animation 样式 -->
+    <style name="activityAnimation" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_slide_right_out</item>
+    </style>
+
     <!--图片 CheckBox-->
     <style name="checkbox_theme">
         <item name="android:button">@drawable/checkbox_style</item>
+    </style>
+
+    <!--弹性对话框动画-->
+    <style name="hint_dialog_anim">
+        <item name="android:windowEnterAnimation">@anim/modal_in</item>
+        <item name="android:windowExitAnimation">@anim/modal_out</item>
+    </style>
+
+    <!--从下往上弹显示-->
+    <style name="photo_anim_style">
+        <item name="android:windowEnterAnimation">@anim/pop_show</item>
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/pop_hide</item>
+        <!-- 指定消失的动画xml -->
     </style>
 
     <!--对话框主题-->
@@ -25,4 +50,5 @@
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
 </resources>
