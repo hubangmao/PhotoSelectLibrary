@@ -8,5 +8,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/re_photo_popup_layout"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp"
+        android:scrollbars="vertical"/>
 </RelativeLayout>

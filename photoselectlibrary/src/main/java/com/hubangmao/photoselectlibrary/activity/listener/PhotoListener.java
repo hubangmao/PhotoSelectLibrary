@@ -1,7 +1,7 @@
 package com.hubangmao.photoselectlibrary.activity.listener;
 
 
-import com.hubangmao.photoselectlibrary.utils.FileBean;
+import com.hubangmao.photoselectlibrary.bean.FileBean;
 
 import java.io.File;
 import java.util.ArrayList;

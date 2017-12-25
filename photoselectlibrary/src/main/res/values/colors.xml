@@ -29,5 +29,6 @@
     <color name="rv_sb_dow">#18a0d0</color>
     <color name="back_dow">#f5f5f5</color>
     <color name="back_up">#ffffff</color>
+    <color name="white">#ffffff</color>
 
 </resources>

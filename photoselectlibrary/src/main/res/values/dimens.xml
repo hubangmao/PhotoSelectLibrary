@@ -15,4 +15,5 @@
     <dimen name="dialog_btn_text_size">14dp</dimen>
     <!--按钮隔栏大小-->
     <dimen name="dialog_btn_every_bar_size">0.8dp</dimen>
+    <dimen name="tool_bar_height">48dp</dimen>
 </resources>

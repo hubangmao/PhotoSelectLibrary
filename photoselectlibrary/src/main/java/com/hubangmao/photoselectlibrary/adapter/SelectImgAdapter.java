@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,7 +19,7 @@ import com.hubangmao.photoselectlibrary.activity.PhotoShowMaxImgActivity;
 import com.hubangmao.photoselectlibrary.activity.SelectImgActivity;
 import com.hubangmao.photoselectlibrary.activity.listener.PhotoListener;
 import com.hubangmao.photoselectlibrary.utils.BitmapCache;
-import com.hubangmao.photoselectlibrary.utils.FileBean;
+import com.hubangmao.photoselectlibrary.bean.FileBean;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,7 +36,6 @@ import static com.hubangmao.photoselectlibrary.activity.PhotoShowMaxImgActivity.
 public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
     private final String TAG = "SelectImgAdapter";
     private Context mContext;
-    private boolean mItemIsAnim = true;
     private ArrayList<FileBean> mAllImagePathList = new ArrayList<>();
     private HashMap<File, Boolean> mImgSelStateSet = new HashMap<>();
     //一张图片 选择状态监听
@@ -67,6 +65,7 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
         notifyDataSetChanged();
         //打开小图缓存
         BitmapCache.mIsStopLoadMinImg = false;
+
         new Thread() {
             @Override
             public void run() {
@@ -116,9 +115,6 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
         boolean cbSelState = mImgSelStateSet.get(fileBean.getImgFile());
         holder.mCbSelImg.setChecked(cbSelState);
 
-        if (mItemIsAnim) {
-            holder.mRlSelImgLayout.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.select_img_item_enter));
-        }
 
         //选中显示灰色背景
         if (cbSelState) {
@@ -169,10 +165,6 @@ public class SelectImgAdapter extends RecyclerView.Adapter<SelectImgHolder> {
             }
         });
 
-        //绘制完后就不做动画 动画执行过快会留下 item的印记
-        if (position + 1 == mAllImagePathList.size()) {
-            mItemIsAnim = false;
-        }
 
     }
 

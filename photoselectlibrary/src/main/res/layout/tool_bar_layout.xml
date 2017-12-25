@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hubangmao.photoselectlibrary.style.StyleRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_tool_bar_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/tool_bar_height"
+    android:background="@color/colorAccent">
+
+    <ImageView
+        android:id="@+id/iv_tool_bar_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/come_back"/>
+
+    <TextView
+        android:id="@+id/tv_tool_bar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"/>
+
+    <ImageView
+        android:id="@+id/iv_tool_bar_right_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_tool_bar_title_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@id/iv_tool_bar_right_ic"
+        android:textColor="@color/white"/>
+
+</com.hubangmao.photoselectlibrary.style.StyleRelativeLayout>

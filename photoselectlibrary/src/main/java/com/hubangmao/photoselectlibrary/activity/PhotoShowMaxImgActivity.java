@@ -14,12 +14,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.hubangmao.photoselectlibrary.R;
 import com.hubangmao.photoselectlibrary.activity.listener.PhotoListener;
+import com.hubangmao.photoselectlibrary.utils.BitmapCache;
+import com.hubangmao.photoselectlibrary.bean.FileBean;
 import com.hubangmao.photoselectlibrary.zoom.FlexibleImageView;
 import com.hubangmao.photoselectlibrary.zoom.PhotoViewAttacher;
 import com.hubangmao.photoselectlibrary.zoom.ViewPagerFixed;
@@ -27,16 +25,13 @@ import com.hubangmao.photoselectlibrary.zoom.ViewPagerFixed;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 
 /**
- * 介绍:  查看大图
- * author:胡邦茂
- * CreateDate: 2017/12/24 10:57
+ * Created by 胡邦茂 on 2017/2/22.
+ * 功能说明:查看大图,传入string类型的ArrayList,文件路径
  */
-
 public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
     private final String TAG = "PhotoShowMaxImgActivity";
     //intent key
@@ -188,9 +183,8 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
         int imgNum = 0;
 
         Set<File> set = SelectImgActivity.mImgSelStateSet.keySet();
-        Iterator<File> iterator = set.iterator();
-        while (iterator.hasNext()) {
-            if (SelectImgActivity.mImgSelStateSet.get(iterator.next())) {
+        for (File aSet : set) {
+            if (SelectImgActivity.mImgSelStateSet.get(aSet)) {
                 imgNum++;
             }
         }
@@ -236,27 +230,25 @@ public class PhotoShowMaxImgActivity extends PhotoBaseActivity {
             mPbHint.setVisibility(View.VISIBLE);
             final FlexibleImageView flexibleImageView = mFILists.get(position);
 
-            Glide.with(mActivity)
-                    .load(new File(mAllImgList.get(position)))
-                    .crossFade()
-                    .into(new GlideDrawableImageViewTarget(flexibleImageView) {
+            BitmapCache.getBitmapCache().asyReduceMaxImageSize(new File(mAllImgList.get(position)), new BitmapCache.OnMaxImgLoadListener() {
+                @Override
+                public void onMaxImgLoadListener(final FileBean b) {
+                    runOnUiThread(new Runnable() {
                         @Override
-                        public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
-                            super.onResourceReady(drawable, anim);
+                        public void run() {
                             mPbHint.setVisibility(View.GONE);
-                            //在这里添加一些图片加载完成的操作
+                            flexibleImageView.setImageBitmap(b.getBitmap());
+
+                            if (flexibleImageView.getParent() == container) {
+                                container.removeView(flexibleImageView);
+                            }
+                            container.addView(flexibleImageView);
+
                         }
                     });
+                }
+            });
 
-//
-//            flexibleImageView.setImageBitmap(b.getBitmap());
-//
-//            if (flexibleImageView.getParent() == container) {
-//                container.removeView(flexibleImageView);
-//            }
-//            container.addView(flexibleImageView);
-//
-//
             flexibleImageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                 @Override
                 public void onPhotoTap(View view, float x, float y) {

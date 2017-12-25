@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 
+import com.hubangmao.photoselectlibrary.bean.FileBean;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;

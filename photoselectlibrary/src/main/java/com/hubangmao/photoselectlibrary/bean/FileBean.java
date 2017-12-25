@@ -1,13 +1,14 @@
-package com.hubangmao.photoselectlibrary.utils;
+package com.hubangmao.photoselectlibrary.bean;
 
 import android.graphics.Bitmap;
 
 import java.io.File;
 
 /**
- * Created by 胡邦茂 on 2017/2/26.
+ * 介绍:  文件实体
+ * author:胡邦茂
+ * CreateDate: 2017/12/25 15:35
  */
-
 public class FileBean {
     //图片名称
     private String mFileName;

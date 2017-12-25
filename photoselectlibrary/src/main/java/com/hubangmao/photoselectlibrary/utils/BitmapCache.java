@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 import android.support.v4.util.LruCache;
 import android.widget.ImageView;
 
+import com.hubangmao.photoselectlibrary.bean.FileBean;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -71,7 +73,7 @@ public class BitmapCache {
 
     //小图缓存完成后回调
     public interface OnMinImgLoadListener {
-        void onMinImgLoadListener(FileBean f,int index);
+        void onMinImgLoadListener(FileBean f, int index);
     }
 
     //点击查看大图时 停止加载

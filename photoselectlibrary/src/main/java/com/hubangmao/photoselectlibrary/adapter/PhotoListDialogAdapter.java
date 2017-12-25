@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.hubangmao.photoselectlibrary.R;
 import com.hubangmao.photoselectlibrary.activity.listener.PhotoListener;
 import com.hubangmao.photoselectlibrary.utils.BitmapCache;
-import com.hubangmao.photoselectlibrary.utils.FileBean;
+import com.hubangmao.photoselectlibrary.bean.FileBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;

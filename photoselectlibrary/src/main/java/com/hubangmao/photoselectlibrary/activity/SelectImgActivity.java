@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ import com.hubangmao.photoselectlibrary.adapter.PhotoListDialogAdapter;
 import com.hubangmao.photoselectlibrary.adapter.SelectImgAdapter;
 import com.hubangmao.photoselectlibrary.utils.BitmapCache;
 import com.hubangmao.photoselectlibrary.utils.CheckPermission;
-import com.hubangmao.photoselectlibrary.utils.FileBean;
+import com.hubangmao.photoselectlibrary.bean.FileBean;
 import com.hubangmao.photoselectlibrary.utils.GetAllImagePath;
 import com.hubangmao.photoselectlibrary.utils.Utils;
 
@@ -232,9 +233,15 @@ public class SelectImgActivity extends PhotoBaseActivity implements
         mRvPhotoItem.setAdapter(photoAdapter);
 
         mPhotoDialog.setContentView(mPhotoDialogLayout);
-        Window dialogWindow = mPhotoDialog.getWindow();
-        dialogWindow.setGravity(Gravity.BOTTOM);
-        dialogWindow.setWindowAnimations(R.style.photo_anim_style); // 添加动画
+        Window window = mPhotoDialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+        window.setWindowAnimations(R.style.photo_anim_style); // 添加动画
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+
         mPhotoDialog.show();
     }
 
